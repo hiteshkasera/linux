@@ -23,7 +23,9 @@ static int imx_sph0645_hw_params(struct snd_pcm_substream *substream,
 	struct snd_soc_dai *cpu_dai = rtd->cpu_dai;
 	u32 channels = 2; //ALWAYS 2 CHANNELS  params_channels(params);
 	u32 rate = params_rate(params); //sampling rate
+        dev_err(cpu_dai->dev, "sampling rate parms_rate output rate : %d \n" , rate);
 	u32 bclk = rate * channels * 32; //fixed to sampling rate * 64
+        dev_err(cpu_dai->dev, "bclk : %d \n" , bclk);	
 	int ret = 0;
 
 	/* set cpu DAI configuration */
