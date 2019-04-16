@@ -170,7 +170,7 @@ static int fsl_sai_set_dai_tdm_slot(struct snd_soc_dai *cpu_dai, u32 tx_mask,
 				u32 rx_mask, int slots, int slot_width)
 {
 	struct fsl_sai *sai = snd_soc_dai_get_drvdata(cpu_dai);
-
+	dev_err(cpu_dai->dev, "Entered into fsl sai set dai tdm slot:\n");
 	sai->slots = slots;
 	sai->slot_width = slot_width;
 
@@ -181,6 +181,7 @@ static int fsl_sai_set_dai_sysclk_tr(struct snd_soc_dai *cpu_dai,
 		int clk_id, unsigned int freq, int fsl_dir)
 {
 	struct fsl_sai *sai = snd_soc_dai_get_drvdata(cpu_dai);
+	dev_err(cpu_dai->dev, "Entered into fsl sai set dai sys clk tr:\n");
 	bool tx = fsl_dir == FSL_FMT_TRANSMITTER;
 	u32 val_cr2 = 0;
 
@@ -211,7 +212,7 @@ static int fsl_sai_set_dai_sysclk(struct snd_soc_dai *cpu_dai,
 		int clk_id, unsigned int freq, int dir)
 {
 	int ret;
-
+	dev_err(cpu_dai->dev, "Entered into fsl sai set dai sys clk:\n");
 	if (dir == SND_SOC_CLOCK_IN)
 		return 0;
 
@@ -367,6 +368,7 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 {
 	struct fsl_sai *sai = snd_soc_dai_get_drvdata(dai);
 	unsigned long clk_rate;
+	dev_err(dai->dev, "Entered into fsl sai set bclk :\n");
 	u32 savediv = 0, ratio, savesub = freq;
 	u32 id;
 	int ret = 0;
@@ -460,7 +462,7 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
 	u32 slots = (channels == 1) ? 2 : channels;
 	u32 slot_width = word_width;
 	int ret;
-
+	dev_err(cpu_dai->dev, "Entered into fsl sai hw params:\n");
 	if (sai->slots)
 		slots = sai->slots;
 
