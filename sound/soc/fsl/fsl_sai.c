@@ -368,7 +368,7 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 {
 	struct fsl_sai *sai = snd_soc_dai_get_drvdata(dai);
 	unsigned long clk_rate;
-	dev_err(dai->dev, "Entered into fsl sai set bclk :\n");
+	dev_err(dai->dev, "Entered into fsl sai set bclk with freq: %d Hz\n",freq);
 	u32 savediv = 0, ratio, savesub = freq;
 	u32 id;
 	int ret = 0;
@@ -379,6 +379,7 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 
 	for (id = 0; id < FSL_SAI_MCLK_MAX; id++) {
 		clk_rate = clk_get_rate(sai->mclk_clk[id]);
+		dev_err(dai->dev, "Entered into fsl sai set bclk mclk_clk[%d] = %ldHz:\n", id, clk_rate);
 		if (!clk_rate)
 			continue;
 
@@ -396,6 +397,7 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 		dev_dbg(dai->dev,
 			"ratio %d for freq %dHz based on clock %ldHz\n",
 			ratio, freq, clk_rate);
+		dev_err(dai->dev, "Entered into fsl sai set bclk ratio = %d:\n", ratio);
 
 		if (ratio % 2 == 0 && ratio >= 2 && ratio <= 512)
 			ratio /= 2;
@@ -405,6 +407,7 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 		if (ret < savesub) {
 			savediv = ratio;
 			sai->mclk_id[tx] = id;
+			dev_err(dai->dev, "Entered into fsl sai set bclk id and tx : %d, id = %d:\n, savediv :%d", tx, id, savediv);
 			savesub = ret;
 		}
 
@@ -430,6 +433,7 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 	 */
 	if ((sai->synchronous[TX] && !sai->synchronous[RX]) ||
 	    (!tx && !sai->synchronous[RX])) {
+		dev_err(dai->dev, "Entered into fsl sai set bclk synchronous:\n");
 		regmap_update_bits(sai->regmap, FSL_SAI_RCR2,
 				   FSL_SAI_CR2_MSEL_MASK,
 				   FSL_SAI_CR2_MSEL(sai->mclk_id[tx]));
@@ -437,6 +441,7 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 				   FSL_SAI_CR2_DIV_MASK, savediv - 1);
 	} else if ((sai->synchronous[RX] && !sai->synchronous[TX]) ||
 		   (tx && !sai->synchronous[TX])) {
+		dev_err(dai->dev, "Entered into fsl sai set bclk asynchronous:\n");
 		regmap_update_bits(sai->regmap, FSL_SAI_TCR2,
 				   FSL_SAI_CR2_MSEL_MASK,
 				   FSL_SAI_CR2_MSEL(sai->mclk_id[tx]));
@@ -461,6 +466,7 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
 	u32 val_cr4 = 0, val_cr5 = 0;
 	u32 slots = (channels == 1) ? 2 : channels;
 	u32 slot_width = word_width;
+	u32 sampling_rate = params_rate(params);
 	int ret;
 	dev_err(cpu_dai->dev, "Entered into fsl sai hw params:\n");
 	if (sai->slots)
@@ -469,9 +475,14 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
 	if (sai->slot_width)
 		slot_width = sai->slot_width;
 
+	dev_err(cpu_dai->dev, "Entered into fsl sai hw params slots: %d\n", slots);
+	dev_err(cpu_dai->dev, "Entered into fsl sai hw params slot_width: %d\n", slot_width);
+	dev_err(cpu_dai->dev, "Entered into fsl sai hw params sampling_rate: %d\n", sampling_rate);
+
 	if (!sai->slave_mode[tx]) {
 		ret = fsl_sai_set_bclk(cpu_dai, tx,
 				slots * slot_width * params_rate(params));
+		dev_err(cpu_dai->dev, "Entered into fsl sai hw params exited from set bclk: ret = %d \n",ret);
 		if (ret)
 			return ret;
 
