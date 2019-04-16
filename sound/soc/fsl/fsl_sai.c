@@ -181,8 +181,9 @@ static int fsl_sai_set_dai_sysclk_tr(struct snd_soc_dai *cpu_dai,
 		int clk_id, unsigned int freq, int fsl_dir)
 {
 	struct fsl_sai *sai = snd_soc_dai_get_drvdata(cpu_dai);
-	dev_err(cpu_dai->dev, "Entered into fsl sai set dai sys clk tr:\n");
+	
 	bool tx = fsl_dir == FSL_FMT_TRANSMITTER;
+	dev_err(cpu_dai->dev, "Entered into fsl sai set dai sys clk tr: tx : %d \n", tx);
 	u32 val_cr2 = 0;
 
 	switch (clk_id) {
@@ -489,10 +490,12 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
 		/* Do not enable the clock if it is already enabled */
 		if (!(sai->mclk_streams & BIT(substream->stream))) {
 			ret = clk_prepare_enable(sai->mclk_clk[sai->mclk_id[tx]]);
+			dev_err(cpu_dai->dev, "Entered into fsl sai hw params exited from bclk: sai->mclkstreams = %d , BIt:%d\n", sai->mclk_streams, BIT(substream->stream));
 			if (ret)
 				return ret;
 
 			sai->mclk_streams |= BIT(substream->stream);
+			dev_err(cpu_dai->dev, "Entered into fsl sai hw params exited from bclk: sai->mclkstreams = %d\n", sai->mclk_streams);
 		}
 	}
 
