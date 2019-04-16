@@ -41,7 +41,7 @@ static int imx_sph0645_hw_params(struct snd_pcm_substream *substream,
 		return ret;
 	}
 
-	ret = snd_soc_dai_set_sysclk(cpu_dai, 0, bclk, SND_SOC_CLOCK_OUT);
+	ret = snd_soc_dai_set_sysclk(cpu_dai, 1, bclk, SND_SOC_CLOCK_OUT);
 	if (ret)
 		dev_err(cpu_dai->dev, "failed to set cpu sysclk\n");
 
