@@ -373,6 +373,7 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 	u32 savediv = 0, ratio, savesub = freq;
 	u32 id;
 	int ret = 0;
+	
 
 	/* Don't apply to slave mode */
 	if (sai->slave_mode[tx])
@@ -469,6 +470,7 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
 	u32 slot_width = word_width;
 	u32 sampling_rate = params_rate(params);
 	int ret;
+	u32 test_clk;
 	dev_err(cpu_dai->dev, "Entered into fsl sai hw params:\n");
 	if (sai->slots)
 		slots = sai->slots;
@@ -490,7 +492,8 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
 		/* Do not enable the clock if it is already enabled */
 		if (!(sai->mclk_streams & BIT(substream->stream))) {
 			ret = clk_prepare_enable(sai->mclk_clk[sai->mclk_id[tx]]);
-			dev_err(cpu_dai->dev, "Entered into fsl sai hw params exited from bclk: sai->mclkstreams = %d , BIt:%d\n", sai->mclk_streams, BIT(substream->stream));
+			test_clk = clk_get_rate(sai->mclk_clk[sai->mclk_id[tx]]);
+			dev_err(cpu_dai->dev, "Entered into fsl sai hw params exited from bclk: sai->mclkstreams = %d , BIt:%d, mclk_clk :%d , tx: %d \n", sai->mclk_streams, BIT(substream->stream), test_clk, tx);
 			if (ret)
 				return ret;
 
