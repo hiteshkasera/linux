@@ -16,6 +16,26 @@
 #include <linux/i2c.h>
 #include <sound/soc.h>
 
+#include <linux/busfreq-imx.h>
+#include <linux/clk.h>
+#include <linux/delay.h>
+#include <linux/dmaengine.h>
+#include <linux/of_device.h>
+#include <linux/of_address.h>
+#include <linux/pm_runtime.h>
+#include <linux/regmap.h>
+#include <linux/slab.h>
+#include <linux/time.h>
+#include <linux/pm_qos.h>
+#include <sound/core.h>
+#include <sound/dmaengine_pcm.h>
+#include <sound/pcm_params.h>
+#include <linux/mfd/syscon.h>
+#include <linux/mfd/syscon/imx6q-iomuxc-gpr.h>
+
+#include "fsl_sai.h"
+#include "imx-pcm.h"
+
 static int imx_sph0645_hw_params(struct snd_pcm_substream *substream,
 		struct snd_pcm_hw_params *params)
 {
@@ -75,6 +95,7 @@ static int imx_sph0645_probe(struct platform_device *pdev)
 	struct snd_soc_card *card = &snd_soc_card_imx_3stack;
 	struct device_node *cpu_np, *np = pdev->dev.of_node;
 	struct platform_device *cpu_pdev;
+	struct regmap *gpr;
 	int ret;
 
 	cpu_np = of_parse_phandle(pdev->dev.of_node, "cpu-dai", 0);
@@ -89,6 +110,13 @@ static int imx_sph0645_probe(struct platform_device *pdev)
 		ret = -EINVAL;
 		goto end;
 	}
+
+	gpr = syscon_regmap_lookup_by_compatible("fsl,imx6ul-iomuxc-gpr");
+			if (IS_ERR(gpr)) {
+				dev_err(&pdev->dev, "cannot find iomuxc registers\n");
+				return PTR_ERR(gpr);
+				}
+	regmap_update_bits(gpr, IOMUXC_GPR1, MCLK_DIR(1),MCLK_DIR(1));
 
 	card->dev = &pdev->dev;
 	card->dai_link->cpu_dai_name = dev_name(&cpu_pdev->dev);
