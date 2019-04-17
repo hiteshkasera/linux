@@ -595,7 +595,7 @@ static int fsl_sai_trigger(struct snd_pcm_substream *substream, int cmd,
 	u8 channels = substream->runtime->channels;
 	u32 xcsr, count = 100;
 	int i;
-
+        dev_err(cpu_dai->dev, "Entered into fsl sai trigger:\n");
 	/*
 	 * Asynchronous mode: Clear SYNC for both Tx and Rx.
 	 * Rx sync with Tx clocks: Clear SYNC for Tx, set it for Rx.
@@ -725,7 +725,7 @@ static void fsl_sai_shutdown(struct snd_pcm_substream *substream,
 {
 	struct fsl_sai *sai = snd_soc_dai_get_drvdata(cpu_dai);
 	bool tx = substream->stream == SNDRV_PCM_STREAM_PLAYBACK;
-
+        dev_err(cpu_dai->dev, "Entered into fsl sai shutdown:\n");
 	if (sai->is_stream_opened[tx]) {
 		regmap_update_bits(sai->regmap, FSL_SAI_xCR3(tx), FSL_SAI_CR3_TRCE0 | FSL_SAI_CR3_TRCE1, 0);
 		clk_disable_unprepare(sai->bus_clk);
@@ -748,7 +748,7 @@ static const struct snd_soc_dai_ops fsl_sai_pcm_dai_ops = {
 static int fsl_sai_dai_probe(struct snd_soc_dai *cpu_dai)
 {
 	struct fsl_sai *sai = dev_get_drvdata(cpu_dai->dev);
-
+        dev_err(cpu_dai->dev, "Entered into fsl sai dai probe:\n");
 	/* Software Reset for both Tx and Rx */
 	regmap_write(sai->regmap, FSL_SAI_TCSR, FSL_SAI_CSR_SR);
 	regmap_write(sai->regmap, FSL_SAI_RCSR, FSL_SAI_CSR_SR);
