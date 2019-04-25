@@ -253,13 +253,14 @@
 };
 
 /* Parallel LCD */
+/*
 &lcdif {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_lcdif_dat0_17
 		     &pinctrl_lcdif_clken
 		     &pinctrl_lcdif_hvsync>;
 	lcd-supply = <&ldo4_ext>;       /* BU90T82 LVDS bridge power */
-	display = <&g101evn010>;
+/*	display = <&g101evn010>;
 	status = "disabled";
 
 	f07a0102: display@0 {
@@ -332,6 +333,8 @@
 		};
 	};
 };
+
+*/
 
 /* Powers BU90T82 LVDS bridge at 1.8V */
 &ldo4_ext {
