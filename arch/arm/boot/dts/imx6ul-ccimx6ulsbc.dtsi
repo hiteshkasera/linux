@@ -556,7 +556,7 @@
 			>;
 		};
 
-		pinctrl_lcdif_dat0_17: lcdifdatgrp0_17 {
+		/*pinctrl_lcdif_dat0_17: lcdifdatgrp0_17 {
 			fsl,pins = <
 				MX6UL_PAD_LCD_DATA00__LCDIF_DATA00	0x79
 				MX6UL_PAD_LCD_DATA01__LCDIF_DATA01	0x79
@@ -608,7 +608,7 @@
 			fsl,pins = <
 				MX6UL_PAD_LCD_RESET__LCDIF_RESET	0x79
 			>;
-		};
+		}; */
 
 		pinctrl_pwm4: pwm4grp {
 			fsl,pins = <
