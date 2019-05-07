@@ -88,7 +88,7 @@
     assigned-clocks = <&clks IMX6UL_CLK_SAI1_SEL>,
             <&clks IMX6UL_CLK_SAI1>;
     assigned-clock-parents = <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>;
-    assigned-clock-rates = <0>, <44400000>;
+    assigned-clock-rates = <0>, <12288000>;
     fsl,sai-mclk-direction-output; 
 
     status = "okay";
