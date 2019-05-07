@@ -69,7 +69,7 @@ static struct fsl_sai_soc_data fsl_sai_imx7ulp = {
 
 static const unsigned int fsl_sai_rates[] = {
 	8000, 11025, 12000, 16000, 22050,
-	24000, 32000, 44100, 48000, 64000,
+	24000, 32000, 44100, 46250, 48000, 64000,
 	88200, 96000, 176400, 192000
 };
 
