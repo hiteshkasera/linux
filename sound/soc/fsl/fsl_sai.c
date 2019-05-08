@@ -69,7 +69,7 @@ static struct fsl_sai_soc_data fsl_sai_imx7ulp = {
 
 static const unsigned int fsl_sai_rates[] = {
 	8000, 11025, 12000, 16000, 22050,
-	24000, 32000, 44100, 46250, 48000, 64000,
+	24000, 32000, 44100, 23125, 48000, 64000,
 	88200, 96000, 176400, 192000
 };
 
@@ -472,7 +472,7 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
 	u32 slots = (channels == 1) ? 2 : channels;
 	u32 slot_width = word_width;
 	u32 sampling_rate = params_rate(params);
-	sampling_rate = 46250;
+	sampling_rate = 23125;
 	int ret;
 	u32 test_clk;
 	dev_err(cpu_dai->dev, "Entered into fsl sai hw params:\n");
