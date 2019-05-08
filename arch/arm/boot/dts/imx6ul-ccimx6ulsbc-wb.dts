@@ -23,6 +23,7 @@
     	                       "fsl,imx-mic-sph0645";
     	model = "sph0645-audio";
     	cpu-dai = <&sai1>;
+        gpr = <&gpr 4 0x80000 0x80000>;
     };
 
     /*
