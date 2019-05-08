@@ -385,8 +385,8 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 		if (!clk_rate)
 			continue;
 
-		/* added clk_rate =44.4Mhz 
-		clk_rate = 44400000; */
+		/* added clk_rate =44.4Mhz */
+		clk_rate = 44400000; 
 
 		ratio = clk_rate / freq;
 
@@ -472,6 +472,7 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
 	u32 slots = (channels == 1) ? 2 : channels;
 	u32 slot_width = word_width;
 	u32 sampling_rate = params_rate(params);
+	sampling rate = 46250;
 	int ret;
 	u32 test_clk;
 	dev_err(cpu_dai->dev, "Entered into fsl sai hw params:\n");
@@ -486,8 +487,10 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
 	dev_err(cpu_dai->dev, "Entered into fsl sai hw params sampling_rate: %d\n", sampling_rate);
 
 	if (!sai->slave_mode[tx]) {
+		/*ret = fsl_sai_set_bclk(cpu_dai, tx,
+				slots * slot_width * params_rate(params));*/
 		ret = fsl_sai_set_bclk(cpu_dai, tx,
-				slots * slot_width * params_rate(params));
+				slots * slot_width * sampling_rate);
 		dev_err(cpu_dai->dev, "Entered into fsl sai hw params exited from set bclk: ret = %d \n",ret);
 		if (ret)
 			return ret;
