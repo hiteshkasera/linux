@@ -472,7 +472,7 @@ static int fsl_sai_hw_params(struct snd_pcm_substream *substream,
 	u32 slots = (channels == 1) ? 2 : channels;
 	u32 slot_width = word_width;
 	u32 sampling_rate = params_rate(params);
-	sampling rate = 46250;
+	sampling_rate = 46250;
 	int ret;
 	u32 test_clk;
 	dev_err(cpu_dai->dev, "Entered into fsl sai hw params:\n");
