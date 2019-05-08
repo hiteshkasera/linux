@@ -385,8 +385,8 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 		if (!clk_rate)
 			continue;
 
-		/* added clk_rate =44.4Mhz */
-		clk_rate = 44400000;
+		/* added clk_rate =44.4Mhz 
+		clk_rate = 44400000; */
 
 		ratio = clk_rate / freq;
 
