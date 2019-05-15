@@ -104,6 +104,13 @@
     status = "okay";
 };
 
+&uart3 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_uart3>;
+
+    status = "okay";
+};
+
 &uart5 {
     pinctrl-names = "default";
     pinctrl-0 = <&pinctrl_console>;
@@ -146,8 +153,6 @@
                 MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
                 /* gpio_XBee_DTR */
                 MX6UL_PAD_SNVS_TAMPER6__GPIO5_IO06		0x10b0
-                /* gpio_CHG_INT */
-                MX6UL_PAD_SNVS_TAMPER7__GPIO5_IO07		0x10b0
                 /* gpio_SPH_SELECT */
                 MX6UL_PAD_SNVS_TAMPER2__GPIO5_IO02		0x10b0
                 /* gpio_BTN1 */
@@ -182,6 +187,13 @@
                 MX6UL_PAD_UART2_TX_DATA__UART2_DCE_TX		0x1b0b1
                 MX6UL_PAD_UART2_RTS_B__UART2_DCE_RTS		0x1b0b1
                 MX6UL_PAD_UART2_CTS_B__UART2_DCE_CTS		0x1b0b1
+            >;
+        };
+
+	pinctrl_uart3: uart3grp {
+            fsl,pins = <
+                MX6UL_PAD_UART3_RX_DATA__UART3_DCE_RX		0x1b0b1
+                MX6UL_PAD_UART3_TX_DATA__UART3_DCE_TX		0x1b0b1
             >;
         };
 
