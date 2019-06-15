@@ -34,7 +34,7 @@
 #include <linux/regmap.h>
 
 #define DEFAULT_PWR_KEY_DEBOUNCE	150	/* 150 ms */
-#define DEFAULT_PWR_KEY_DELAY		4	/* 4 seconds */
+#define DEFAULT_PWR_KEY_DELAY		20	/* 4 seconds */
 #define DEFAULT_PWR_KEY_GUARD		25	/* 25 seconds */
 #define MAX_PWR_KEY_DEBOUNCE		255
 #define MAX_PWR_KEY_DELAY		255
@@ -62,7 +62,7 @@ static irqreturn_t mca_cc6ul_pwrkey_power_off_irq_handler(int irq, void *data)
 	struct mca_cc6ul_pwrkey *pwrkey = data;
 
 	dev_notice(&pwrkey->input->dev, "Power Button - KEY_POWER\n");
-
+	dev_err(&pwrkey->input->dev, "Power Button - KEY_POWER\n");
 	input_report_key(pwrkey->input, KEY_POWER, 1);
 	input_sync(pwrkey->input);
 
@@ -75,8 +75,9 @@ static irqreturn_t mca_cc6ul_pwrkey_sleep_irq_handler(int irq, void *data)
 
 	/* Report the event only if not coming from suspend */
 	if (!pwrkey->suspended) {
-		dev_notice(&pwrkey->input->dev, "Power button - KEY_SLEEP\n");
 
+		dev_notice(&pwrkey->input->dev, "Power button - KEY_SLEEP\n");
+		
 		input_report_key(pwrkey->input, KEY_SLEEP, 1);
 		input_report_key(pwrkey->input, KEY_SLEEP, 0);
 		input_sync(pwrkey->input);
