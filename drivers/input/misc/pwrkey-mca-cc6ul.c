@@ -32,7 +32,7 @@
 #include <linux/of.h>
 #include <linux/of_irq.h>
 #include <linux/regmap.h>
-#include <linux/platform_data/i2c-imx.h>
+#include <linux/i2c-imx_1.h>
 
 #define DEFAULT_PWR_KEY_DEBOUNCE	150	/* 150 ms */
 #define DEFAULT_PWR_KEY_DELAY		4	/* 4 seconds */
@@ -69,7 +69,7 @@ static irqreturn_t mca_cc6ul_pwrkey_power_off_irq_handler(int irq, void *data)
 	dev_notice(&pwrkey->input->dev, "Power Button - KEY_POWER\n");
 	dev_err(&pwrkey->input->dev, "Power Button - KEY_POWER\n");
 	
-	i2c_imx->hwreg= imx21_i2c_hwdata;
+	i2c_imx->hwdata= imx21_i2c_hwdata;
 	i2c_imx->base = 0x40 ;
 	
 	imx_i2c_read_reg(i2c_imx, Command_PowerDown);
