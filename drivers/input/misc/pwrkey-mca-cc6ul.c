@@ -32,7 +32,7 @@
 #include <linux/of.h>
 #include <linux/of_irq.h>
 #include <linux/regmap.h>
-#include <linux/i2c-imx.h>
+#include <linux/platform_data/i2c-imx.h>
 
 #define DEFAULT_PWR_KEY_DEBOUNCE	150	/* 150 ms */
 #define DEFAULT_PWR_KEY_DELAY		4	/* 4 seconds */
