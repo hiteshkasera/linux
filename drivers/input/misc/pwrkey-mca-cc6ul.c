@@ -32,13 +32,16 @@
 #include <linux/of.h>
 #include <linux/of_irq.h>
 #include <linux/regmap.h>
+#include <linux/i2c-imx.h>
 
 #define DEFAULT_PWR_KEY_DEBOUNCE	150	/* 150 ms */
-#define DEFAULT_PWR_KEY_DELAY		20	/* 4 seconds */
+#define DEFAULT_PWR_KEY_DELAY		4	/* 4 seconds */
 #define DEFAULT_PWR_KEY_GUARD		25	/* 25 seconds */
 #define MAX_PWR_KEY_DEBOUNCE		255
 #define MAX_PWR_KEY_DELAY		255
 #define MAX_PWR_KEY_GUARD		255
+
+#define	Command_PowerDown			0b00000010	// Enter ADC Power Down
 
 struct mca_cc6ul_pwrkey {
 	struct mca_cc6ul *mca;
@@ -53,6 +56,8 @@ struct mca_cc6ul_pwrkey {
 	uint32_t pwroff_guard_sec;
 };
 
+struct imx_i2c_struct *i2c_imx;
+
 #ifdef CONFIG_PM_SLEEP
 static DEFINE_SPINLOCK(lock);
 #endif
@@ -63,6 +68,12 @@ static irqreturn_t mca_cc6ul_pwrkey_power_off_irq_handler(int irq, void *data)
 
 	dev_notice(&pwrkey->input->dev, "Power Button - KEY_POWER\n");
 	dev_err(&pwrkey->input->dev, "Power Button - KEY_POWER\n");
+	
+	i2c_imx->hwreg= imx21_i2c_hwdata;
+	i2c_imx->base = 0x40 ;
+	
+	imx_i2c_read_reg(i2c_imx, Command_PowerDown);
+
 	input_report_key(pwrkey->input, KEY_POWER, 1);
 	input_sync(pwrkey->input);
 
@@ -77,7 +88,7 @@ static irqreturn_t mca_cc6ul_pwrkey_sleep_irq_handler(int irq, void *data)
 	if (!pwrkey->suspended) {
 
 		dev_notice(&pwrkey->input->dev, "Power button - KEY_SLEEP\n");
-		
+		dev_err(&pwrkey->input->dev, "Power button - KEY_SLEEP\n");
 		input_report_key(pwrkey->input, KEY_SLEEP, 1);
 		input_report_key(pwrkey->input, KEY_SLEEP, 0);
 		input_sync(pwrkey->input);
