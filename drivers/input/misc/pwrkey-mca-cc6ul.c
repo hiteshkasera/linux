@@ -77,7 +77,7 @@ static irqreturn_t mca_cc6ul_pwrkey_sleep_irq_handler(int irq, void *data)
 	if (!pwrkey->suspended) {
 
 		dev_notice(&pwrkey->input->dev, "Power button - KEY_SLEEP\n");
-		dev_err(&pwrkey->input->dev, "Power button - KEY_SLEEP\n");
+		
 		input_report_key(pwrkey->input, KEY_SLEEP, 1);
 		input_report_key(pwrkey->input, KEY_SLEEP, 0);
 		input_sync(pwrkey->input);
