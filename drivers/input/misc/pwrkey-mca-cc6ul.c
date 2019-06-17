@@ -56,7 +56,7 @@ struct mca_cc6ul_pwrkey {
 	uint32_t pwroff_guard_sec;
 };
 
-struct imx_i2c_struct i2c_imx;
+struct imx_i2c_struct *i2c_imx;
 
 #ifdef CONFIG_PM_SLEEP
 static DEFINE_SPINLOCK(lock);
@@ -69,9 +69,9 @@ static irqreturn_t mca_cc6ul_pwrkey_power_off_irq_handler(int irq, void *data)
 	dev_notice(&pwrkey->input->dev, "Power Button - KEY_POWER\n");
 	dev_err(&pwrkey->input->dev, "Power Button - KEY_POWER\n");
 	
-	i2c_imx->hwdata= &imx21_i2c_hwdata;
-	void __iomem base_1 = 0x40;
-	i2c_imx->base = &base_1 ;
+	.i2c_imx->hwdata= &imx21_i2c_hwdata;
+	 base_1 = 0x40;
+	.i2c_imx->base = &base_1 ;
 	
 	imx_i2c_read_reg(i2c_imx, Command_PowerDown);
 
