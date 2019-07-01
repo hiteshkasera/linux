@@ -70,7 +70,7 @@ static int imx_sph0645_hw_params(struct snd_pcm_substream *substream,
 		dev_err(cpu_dai->dev, "failed to set cpu sysclk\n");
 		return ret;
 
-	ret = snd_soc_dai_set_bclk_ratio(cpu_dai, ratio;
+	ret = snd_soc_dai_set_bclk_ratio(cpu_dai, ratio);
 	if (ret)
 		dev_err(cpu_dai->dev, "failed to set bclk ratio\n"); 
 	return ret;
