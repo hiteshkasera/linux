@@ -35,6 +35,7 @@
 
 #include "fsl_sai.h"
 #include "imx-pcm.h"
+#include "fsl_dsd.h"
 
 static int imx_sph0645_hw_params(struct snd_pcm_substream *substream,
 		struct snd_pcm_hw_params *params)
