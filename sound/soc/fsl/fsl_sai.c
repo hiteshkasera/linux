@@ -247,7 +247,7 @@ static int fsl_sai_set_mclk_rate(struct snd_soc_dai *dai, int clk_id,
 	struct fsl_sai *sai = snd_soc_dai_get_drvdata(dai);
 	struct clk *p = sai->mclk_clk[clk_id], *pll = 0, *npll = 0;
 	u64 ratio = freq;
-	dev_err(dai->dev, "Entered into fsl sai set mclk rate mclk_clk[%d] = %ldHz:\n", id, freq);
+	dev_err(dai->dev, "Entered into fsl sai set mclk rate mclk_clk[%d] = %ldHz:\n", clk_id, freq);
 	int ret;
 
 	while (p && sai->pll8k_clk && sai->pll11k_clk) {
@@ -520,8 +520,8 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 {
 	struct fsl_sai *sai = snd_soc_dai_get_drvdata(dai);
 	unsigned char offset = sai->soc->reg_offset;
-	dev_err(dai->dev, "Entered into fsl sai set bclk with freq: %d Hz\n",freq);
 	unsigned long clk_rate;
+	dev_err(dai->dev, "Entered into fsl sai set bclk with freq: %d Hz\n",freq);
 	unsigned int reg = 0;
 	u32 ratio, savesub = freq, saveratio = 0, savediv = 0;
 	u32 id;
@@ -562,7 +562,7 @@ static int fsl_sai_set_bclk(struct snd_soc_dai *dai, bool tx, u32 freq)
 			if (ret < savesub) {
 				saveratio = ratio;
 				sai->mclk_id[tx] = id;
-				dev_err(dai->dev, "Entered into fsl sai set bclk id and tx : %d, id = %d:\n, savediv :%d", tx, id, savediv);
+				dev_err(dai->dev, "Entered into fsl sai set bclk id and tx : %d, id = %d:\n, savediv :%d", tx, id, saveratio);
 				savesub = ret;
 			}
 
