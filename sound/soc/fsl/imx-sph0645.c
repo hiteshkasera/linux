@@ -48,7 +48,8 @@ static int imx_sph0645_hw_params(struct snd_pcm_substream *substream,
 	u32 rate = params_rate(params); //sampling rate
         dev_err(cpu_dai->dev, "sampling rate parms_rate output rate : %d \n" , rate);
 	u32 bclk = rate * channels * 32; //fixed to sampling rate * 64
-	ratio = mclk / bclk ;
+//	ratio = mclk / bclk ;	
+	ratio = 4;
         dev_err(cpu_dai->dev, "bclk : %d \n" , bclk);	
 		dev_err(cpu_dai->dev, "ratio : %d \n" , ratio);
 	int ret = 0;
@@ -69,11 +70,11 @@ static int imx_sph0645_hw_params(struct snd_pcm_substream *substream,
 	ret = snd_soc_dai_set_sysclk(cpu_dai, 1, mclk, SND_SOC_CLOCK_OUT);
 	if (ret)
 		dev_err(cpu_dai->dev, "failed to set cpu sysclk\n");
-	//	return ret;
+		return ret;
 
-	//ret = snd_soc_dai_set_bclk_ratio(cpu_dai, ratio);
-	//if (ret)
-	//	dev_err(cpu_dai->dev, "failed to set bclk ratio\n"); 
+	ret = snd_soc_dai_set_bclk_ratio(cpu_dai, ratio);
+	if (ret)
+		dev_err(cpu_dai->dev, "failed to set bclk ratio\n"); 
 	return ret;
 }
 
