@@ -179,7 +179,7 @@
                 /* gpio_ADC_RST */
                 MX6UL_PAD_LCD_DATA23__GPIO3_IO28		0x10b0
                 /* gpio_XBee_RST */
-                MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
+               // MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
                 /* gpio_XBee_DTR */
                 MX6UL_PAD_SNVS_TAMPER6__GPIO5_IO06		0x10b0
                 /* gpio_SPH_SELECT */
@@ -223,6 +223,8 @@
                 MX6UL_PAD_UART2_CTS_B__ECSPI3_MOSI		0x10b0
                 MX6UL_PAD_UART2_RTS_B__ECSPI3_MISO		0x10b0
                 MX6UL_PAD_UART2_RX_DATA__ECSPI3_SCLK		0x10b0
+                 /*Chip select */
+                MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
             >;
         };
 
