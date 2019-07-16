@@ -126,7 +126,7 @@ static int imx_sph0645_probe(struct platform_device *pdev)
 				dev_err(&pdev->dev, "cannot find iomuxc registers\n");
 				return PTR_ERR(gpr);
 				}
-	regmap_update_bits(gpr, IOMUXC_GPR1, MCLK_DIR(1),MCLK_DIR(1));
+	regmap_update_bits(gpr, IOMUXC_GPR1, MCLK_DIR(2),MCLK_DIR(2));
 
 	card->dev = &pdev->dev;
 	card->dai_link->cpu_dai_name = dev_name(&cpu_pdev->dev);
