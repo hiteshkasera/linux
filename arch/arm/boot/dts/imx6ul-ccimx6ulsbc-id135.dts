@@ -18,12 +18,19 @@
     // Add here your compatible platform.
     compatible = "digi,ccimx6ul", "fsl,imx6ul";
 
+   // sound {
+   //	compatible = "fsl,imx-audio-sph0645",
+   // 	                       "fsl,imx-mic-sph0645";
+   // 	model = "sph0645-audio";
+   // 	cpu-dai = <&sai1>;
+  //      gpr = <&gpr 4 0x80000 0x80000>;
+  //  };
     sound {
     	compatible = "fsl,imx-audio-sph0645",
     	                       "fsl,imx-mic-sph0645";
     	model = "sph0645-audio";
-    	cpu-dai = <&sai1>;
-        gpr = <&gpr 4 0x80000 0x80000>;
+    	cpu-dai = <&sai2>;
+        gpr = <&gpr>;
     };
 
     /*
@@ -77,31 +84,72 @@
     //};
 };
 
-&sai1 {
-    pinctrl-names = "default";
-    pinctrl-0 = <&pinctrl_sai1>;
+//&sai1 {
+//    pinctrl-names = "default";
+//   pinctrl-0 = <&pinctrl_sai1>;
 
     /*
      * Reference block.
      *
      * Codec dependent section.
      */
-    assigned-clocks = <&clks IMX6UL_CLK_SAI1_SEL>,
-            <&clks IMX6UL_CLK_SAI1>;
-    assigned-clock-parents = <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>;
-    assigned-clock-rates = <0>, <12288000>;
-    fsl,sai-mclk-direction-output; 
+//    assigned-clocks = <&clks IMX6UL_CLK_SAI1_SEL>,
+//            <&clks IMX6UL_CLK_SAI1>;
+//    assigned-clock-parents = <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>;
+//    assigned-clock-rates = <0>, <12288000>;
+//    fsl,sai-mclk-direction-output; 
 
-    status = "okay";
+//    status = "okay";
+//};
+
+&sai2 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_sai2>;
+	assigned-clocks = <&clks IMX6UL_CLK_SAI2_SEL>,
+			<&clks IMX6UL_CLK_PLL4_AUDIO_DIV>,
+			<&clks IMX6UL_CLK_SAI2>;
+	assigned-clock-rates = <0>, <786432000>, <12288000>;
+	assigned-clock-parents = <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>;
+    fsl,sai-mclk-direction-output; 
+	status = "okay";
 };
 
-&uart2 {
+//&uart2 {
+//    pinctrl-names = "default";
+//    pinctrl-0 = <&pinctrl_uart2>;
+
+//    fsl,uart-has-rtscts;
+//
+//    status = "okay";
+//};
+
+&ecspi3 {
+    fsl,spi-num-chipselects = <1>;
     pinctrl-names = "default";
-    pinctrl-0 = <&pinctrl_uart2>;
-
-    fsl,uart-has-rtscts;
-
     status = "okay";
+
+    /*
+     * Configure the GPIO that you selected as 'slave select'.
+     */
+    cs-gpios = <&gpio5 05 GPIO_ACTIVE_LOW>;
+
+    /*
+     * ECSPI3 (as master)
+     */
+    pinctrl-0 = <&pinctrl_ecspi3>;
+
+    /*
+     * Reference block.
+     *
+     * Add your slave devices here. Next is an example of spidev.
+     * Expect a harmless kernel warning if you enable spidev as slave.
+     */
+    spidev@0 {
+        reg = <0>;
+        compatible = "spidev";
+        spi-max-frequency = <20000000>;
+    };
+
 };
 
 &uart3 {
@@ -150,7 +198,7 @@
                 /* gpio_ADC_RST */
                 MX6UL_PAD_LCD_DATA23__GPIO3_IO28		0x10b0
                 /* gpio_XBee_RST */
-                MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
+              //  MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
                 /* gpio_XBee_DTR */
                 MX6UL_PAD_SNVS_TAMPER6__GPIO5_IO06		0x10b0
                 /* gpio_SPH_SELECT */
@@ -171,22 +219,42 @@
             >;
         };
 
-        pinctrl_sai1: sai1grp {
-            fsl,pins = <
-                MX6UL_PAD_LCD_DATA00__SAI1_MCLK		0x17088
-                MX6UL_PAD_LCD_DATA03__SAI1_RX_DATA		0x11088
-                MX6UL_PAD_LCD_DATA02__SAI1_TX_BCLK		0x17088
-                MX6UL_PAD_LCD_DATA04__SAI1_TX_DATA		0x11088
-                MX6UL_PAD_LCD_DATA01__SAI1_TX_SYNC		0x17088
-            >;
+     //   pinctrl_sai1: sai1grp {
+     //       fsl,pins = <
+     //           MX6UL_PAD_LCD_DATA00__SAI1_MCLK		0x17088
+     //           MX6UL_PAD_LCD_DATA03__SAI1_RX_DATA		0x11088
+     //           MX6UL_PAD_LCD_DATA02__SAI1_TX_BCLK		0x17088
+     //           MX6UL_PAD_LCD_DATA04__SAI1_TX_DATA		0x11088
+     //           MX6UL_PAD_LCD_DATA01__SAI1_TX_SYNC		0x17088
+     //       >;
+     //   };
+        pinctrl_sai2: sai2grp {
+	        fsl,pins = <
+		        MX6UL_PAD_JTAG_TRST_B__SAI2_TX_DATA    0x11088
+		        MX6UL_PAD_JTAG_TCK__SAI2_RX_DATA    0x11088
+		        MX6UL_PAD_JTAG_TMS__SAI2_MCLK        0x17088
+		        MX6UL_PAD_JTAG_TDI__SAI2_TX_BCLK    0x17088
+		        MX6UL_PAD_JTAG_TDO__SAI2_TX_SYNC    0x17088
+		        /* Interrupt */
+		        MX6UL_PAD_SNVS_TAMPER7__GPIO5_IO07    0x80000000
+	        >;
         };
 
-        pinctrl_uart2: uart2grp {
+    //    pinctrl_uart2: uart2grp {
+    //        fsl,pins = <
+    //            MX6UL_PAD_UART2_RX_DATA__UART2_DCE_RX		0x1b0b1
+    //            MX6UL_PAD_UART2_TX_DATA__UART2_DCE_TX		0x1b0b1
+    //            MX6UL_PAD_UART2_RTS_B__UART2_DCE_RTS		0x1b0b1
+    //            MX6UL_PAD_UART2_CTS_B__UART2_DCE_CTS		0x1b0b1
+    //        >;
+    //    };
+        pinctrl_ecspi3: ecspi3grp1 {
             fsl,pins = <
-                MX6UL_PAD_UART2_RX_DATA__UART2_DCE_RX		0x1b0b1
-                MX6UL_PAD_UART2_TX_DATA__UART2_DCE_TX		0x1b0b1
-                MX6UL_PAD_UART2_RTS_B__UART2_DCE_RTS		0x1b0b1
-                MX6UL_PAD_UART2_CTS_B__UART2_DCE_CTS		0x1b0b1
+                MX6UL_PAD_UART2_CTS_B__ECSPI3_MOSI		0x10b0
+                MX6UL_PAD_UART2_RTS_B__ECSPI3_MISO		0x10b0
+                MX6UL_PAD_UART2_RX_DATA__ECSPI3_SCLK		0x10b0
+                /*Chip select */
+                MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
             >;
         };
 
