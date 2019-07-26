@@ -159,6 +159,10 @@
     status = "okay";
 };
 
+&caam_keyblob {
+	status = "okay";
+};
+
 &uart5 {
     pinctrl-names = "default";
     pinctrl-0 = <&pinctrl_console>;
