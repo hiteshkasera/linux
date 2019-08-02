@@ -252,19 +252,19 @@
                 MX6UL_PAD_LCD_DATA01__SAI1_TX_SYNC		0x17088
             >;
         };
-        /*
-        pinctrl_sai2: sai2grp {
-	        fsl,pins = <
-		        MX6UL_PAD_JTAG_TRST_B__SAI2_TX_DATA    0x11088
-		        MX6UL_PAD_JTAG_TCK__SAI2_RX_DATA    0x11088
-		        MX6UL_PAD_JTAG_TMS__SAI2_MCLK        0x17088
-		        MX6UL_PAD_JTAG_TDI__SAI2_TX_BCLK    0x17088
-		        MX6UL_PAD_JTAG_TDO__SAI2_TX_SYNC    0x17088
-		        /* Interrupt */
-		        MX6UL_PAD_SNVS_TAMPER7__GPIO5_IO07    0x80000000
-	        >;
-        };
-        */
+        
+       // pinctrl_sai2: sai2grp {
+	   //     fsl,pins = <
+	   // 	        MX6UL_PAD_JTAG_TRST_B__SAI2_TX_DATA    0x11088
+		//        MX6UL_PAD_JTAG_TCK__SAI2_RX_DATA    0x11088
+		//      MX6UL_PAD_JTAG_TMS__SAI2_MCLK        0x17088
+		//      MX6UL_PAD_JTAG_TDI__SAI2_TX_BCLK    0x17088
+		//     MX6UL_PAD_JTAG_TDO__SAI2_TX_SYNC    0x17088
+		//   /* Interrupt */
+		//    MX6UL_PAD_SNVS_TAMPER7__GPIO5_IO07    0x80000000
+	    // >;
+        //};
+        
 
        pinctrl_uart2: uart2grp {
             fsl,pins = <
@@ -274,17 +274,17 @@
                 MX6UL_PAD_UART2_CTS_B__UART2_DCE_CTS		0x1b0b1
             >;
         };
-        /*
-        pinctrl_ecspi3: ecspi3grp1 {
-            fsl,pins = <
-                MX6UL_PAD_UART2_CTS_B__ECSPI3_MOSI		0x10b0
-                MX6UL_PAD_UART2_RTS_B__ECSPI3_MISO		0x10b0
-                MX6UL_PAD_UART2_RX_DATA__ECSPI3_SCLK		0x10b0
-                /*Chip select */
-                MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
-            >;
-        };
-        */
+        
+        //pinctrl_ecspi3: ecspi3grp1 {
+          //  fsl,pins = <
+            //    MX6UL_PAD_UART2_CTS_B__ECSPI3_MOSI		0x10b0
+              //  MX6UL_PAD_UART2_RTS_B__ECSPI3_MISO		0x10b0
+              //  MX6UL_PAD_UART2_RX_DATA__ECSPI3_SCLK		0x10b0
+              //  /*Chip select */
+              //  MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
+           // >;
+       // };
+        
         pinctrl_pwm6: pwm6grp {
             fsl,pins = <
                 MX6UL_PAD_JTAG_TDI__PWM6_OUT		0x110b0
