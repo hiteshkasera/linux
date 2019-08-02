@@ -18,20 +18,20 @@
     // Add here your compatible platform.
     compatible = "digi,ccimx6ul", "fsl,imx6ul";
 
-   // sound {
-   //	compatible = "fsl,imx-audio-sph0645",
-   // 	                       "fsl,imx-mic-sph0645";
-   // 	model = "sph0645-audio";
-   // 	cpu-dai = <&sai1>;
-  //      gpr = <&gpr 4 0x80000 0x80000>;
-  //  };
     sound {
-    	compatible = "fsl,imx-audio-sph0645",
+   	compatible = "fsl,imx-audio-sph0645",
     	                       "fsl,imx-mic-sph0645";
     	model = "sph0645-audio";
-    	cpu-dai = <&sai2>;
-        gpr = <&gpr>;
+ 	cpu-dai = <&sai1>;
+        gpr = <&gpr 4 0x80000 0x80000>;
     };
+  //  sound {
+    //	compatible = "fsl,imx-audio-sph0645",
+    //	                       "fsl,imx-mic-sph0645";
+    //	model = "sph0645-audio";
+    //	cpu-dai = <&sai2>;
+    //  gpr = <&gpr>;
+    //};
 
     /*
      * Reference block.
@@ -84,59 +84,55 @@
     //};
 };
 
-//&sai1 {
-//    pinctrl-names = "default";
-//   pinctrl-0 = <&pinctrl_sai1>;
+&sai1 {
 
-    /*
-     * Reference block.
-     *
-     * Codec dependent section.
-     */
-//    assigned-clocks = <&clks IMX6UL_CLK_SAI1_SEL>,
-//            <&clks IMX6UL_CLK_SAI1>;
-//    assigned-clock-parents = <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>;
-//    assigned-clock-rates = <0>, <12288000>;
-//    fsl,sai-mclk-direction-output; 
+      pinctrl-names = "default";
+      pinctrl-0 = <&pinctrl_sai1>;
+      assigned-clocks = <&clks IMX6UL_CLK_SAI1_SEL>,
+                        <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>, // PLL4 ¿????
+                        <&clks IMX6UL_CLK_SAI1>;
+      assigned-clock-rates = <0>, <786432000>, <12288000>;          // PLL4 ¿????
+      assigned-clock-parents = <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>;   // PLL4 ¿???? 
+      fsl,sai-mclk-direction-output;
+      status = "okay";
 
-//    status = "okay";
-//};
-
-&sai2 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_sai2>;
-	assigned-clocks = <&clks IMX6UL_CLK_SAI2_SEL>,
-			<&clks IMX6UL_CLK_PLL4_AUDIO_DIV>,
-			<&clks IMX6UL_CLK_SAI2>;
-	assigned-clock-rates = <0>, <786432000>, <12288000>;
-	assigned-clock-parents = <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>;
-    fsl,sai-mclk-direction-output; 
-	status = "okay";
 };
 
-//&uart2 {
-//    pinctrl-names = "default";
-//    pinctrl-0 = <&pinctrl_uart2>;
-
-//    fsl,uart-has-rtscts;
-//
-//    status = "okay";
+//&sai2 {
+//	pinctrl-names = "default";
+//	pinctrl-0 = <&pinctrl_sai2>;
+//	assigned-clocks = <&clks IMX6UL_CLK_SAI2_SEL>,
+//			<&clks IMX6UL_CLK_PLL4_AUDIO_DIV>,
+//			<&clks IMX6UL_CLK_SAI2>;
+//	assigned-clock-rates = <0>, <786432000>, <12288000>;
+//	assigned-clock-parents = <&clks IMX6UL_CLK_PLL4_AUDIO_DIV>;
+//    fsl,sai-mclk-direction-output; 
+//	status = "okay";
 //};
 
-&ecspi3 {
-    fsl,spi-num-chipselects = <1>;
+&uart2 {
     pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_uart2>;
+
+    fsl,uart-has-rtscts;
+
     status = "okay";
+};
+
+//&ecspi3 {
+//    fsl,spi-num-chipselects = <1>;
+//    pinctrl-names = "default";
+ //   status = "okay";
 
     /*
      * Configure the GPIO that you selected as 'slave select'.
      */
-    cs-gpios = <&gpio5 05 GPIO_ACTIVE_LOW>;
+   // cs-gpios = <&gpio5 05 GPIO_ACTIVE_LOW>;
 
     /*
      * ECSPI3 (as master)
      */
-    pinctrl-0 = <&pinctrl_ecspi3>;
+    //pinctrl-0 = <&pinctrl_ecspi3>;
 
     /*
      * Reference block.
@@ -144,13 +140,13 @@
      * Add your slave devices here. Next is an example of spidev.
      * Expect a harmless kernel warning if you enable spidev as slave.
      */
-    spidev@0 {
-        reg = <0>;
-        compatible = "spidev";
-        spi-max-frequency = <20000000>;
-    };
+   // spidev@0 {
+     //   reg = <0>;
+       // compatible = "spidev";
+       // spi-max-frequency = <20000000>;
+   // };
 
-};
+//};
 
 &uart3 {
     pinctrl-names = "default";
@@ -173,6 +169,30 @@
     pinctrl-names = "default";
     pinctrl-0 = <&pinctrl_usdhc2>;
     no-1-8-v;
+    status = "okay";
+};
+
+&pwm6 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_pwm6>;
+    clocks = <&clks IMX6UL_CLK_PWM6>,
+         <&clks IMX6UL_CLK_PWM6>;
+    status = "okay";
+};
+
+&pwm7 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_pwm7>;
+    clocks = <&clks IMX6UL_CLK_PWM7>,
+         <&clks IMX6UL_CLK_PWM7>;
+    status = "okay";
+};
+
+&pwm8 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_pwm8>;
+    clocks = <&clks IMX6UL_CLK_PWM8>,
+         <&clks IMX6UL_CLK_PWM8>;
     status = "okay";
 };
 
@@ -202,7 +222,7 @@
                 /* gpio_ADC_RST */
                 MX6UL_PAD_LCD_DATA23__GPIO3_IO28		0x10b0
                 /* gpio_XBee_RST */
-              //  MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
+                MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
                 /* gpio_XBee_DTR */
                 MX6UL_PAD_SNVS_TAMPER6__GPIO5_IO06		0x10b0
                 /* gpio_SPH_SELECT */
@@ -223,15 +243,16 @@
             >;
         };
 
-     //   pinctrl_sai1: sai1grp {
-     //       fsl,pins = <
-     //           MX6UL_PAD_LCD_DATA00__SAI1_MCLK		0x17088
-     //           MX6UL_PAD_LCD_DATA03__SAI1_RX_DATA		0x11088
-     //           MX6UL_PAD_LCD_DATA02__SAI1_TX_BCLK		0x17088
-     //           MX6UL_PAD_LCD_DATA04__SAI1_TX_DATA		0x11088
-     //           MX6UL_PAD_LCD_DATA01__SAI1_TX_SYNC		0x17088
-     //       >;
-     //   };
+        pinctrl_sai1: sai1grp {
+            fsl,pins = <
+                MX6UL_PAD_LCD_DATA00__SAI1_MCLK		0x17088
+                MX6UL_PAD_LCD_DATA03__SAI1_RX_DATA		0x11088
+                MX6UL_PAD_LCD_DATA02__SAI1_TX_BCLK		0x17088
+                MX6UL_PAD_LCD_DATA04__SAI1_TX_DATA		0x11088
+                MX6UL_PAD_LCD_DATA01__SAI1_TX_SYNC		0x17088
+            >;
+        };
+        /*
         pinctrl_sai2: sai2grp {
 	        fsl,pins = <
 		        MX6UL_PAD_JTAG_TRST_B__SAI2_TX_DATA    0x11088
@@ -243,15 +264,17 @@
 		        MX6UL_PAD_SNVS_TAMPER7__GPIO5_IO07    0x80000000
 	        >;
         };
+        */
 
-    //    pinctrl_uart2: uart2grp {
-    //        fsl,pins = <
-    //            MX6UL_PAD_UART2_RX_DATA__UART2_DCE_RX		0x1b0b1
-    //            MX6UL_PAD_UART2_TX_DATA__UART2_DCE_TX		0x1b0b1
-    //            MX6UL_PAD_UART2_RTS_B__UART2_DCE_RTS		0x1b0b1
-    //            MX6UL_PAD_UART2_CTS_B__UART2_DCE_CTS		0x1b0b1
-    //        >;
-    //    };
+       pinctrl_uart2: uart2grp {
+            fsl,pins = <
+                MX6UL_PAD_UART2_RX_DATA__UART2_DCE_RX		0x1b0b1
+                MX6UL_PAD_UART2_TX_DATA__UART2_DCE_TX		0x1b0b1
+                MX6UL_PAD_UART2_RTS_B__UART2_DCE_RTS		0x1b0b1
+                MX6UL_PAD_UART2_CTS_B__UART2_DCE_CTS		0x1b0b1
+            >;
+        };
+        /*
         pinctrl_ecspi3: ecspi3grp1 {
             fsl,pins = <
                 MX6UL_PAD_UART2_CTS_B__ECSPI3_MOSI		0x10b0
@@ -261,6 +284,25 @@
                 MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
             >;
         };
+        */
+        pinctrl_pwm6: pwm6grp {
+            fsl,pins = <
+                MX6UL_PAD_JTAG_TDI__PWM6_OUT		0x110b0
+            >;
+        };
+
+        pinctrl_pwm7: pwm7grp {
+            fsl,pins = <
+                MX6UL_PAD_JTAG_TCK__PWM7_OUT   		0x110b0
+            >;
+        };
+
+        pinctrl_pwm8: pwm8grp {
+            fsl,pins = <
+                MX6UL_PAD_JTAG_TRST_B__PWM8_OUT		0x110b0
+            >;
+        };
+        
 
 	pinctrl_uart3: uart3grp {
             fsl,pins = <
