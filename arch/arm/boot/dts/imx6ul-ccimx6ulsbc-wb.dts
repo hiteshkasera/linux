@@ -172,6 +172,14 @@
     status = "okay";
 };
 
+&pwm5 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&pinctrl_pwm5>;
+    clocks = <&clks IMX6UL_CLK_PWM5>,
+         <&clks IMX6UL_CLK_PWM5>;
+    status = "okay";
+};
+
 &pwm6 {
     pinctrl-names = "default";
     pinctrl-0 = <&pinctrl_pwm6>;
@@ -180,19 +188,11 @@
     status = "okay";
 };
 
-&pwm7 {
+&pwm3 {
     pinctrl-names = "default";
-    pinctrl-0 = <&pinctrl_pwm7>;
-    clocks = <&clks IMX6UL_CLK_PWM7>,
-         <&clks IMX6UL_CLK_PWM7>;
-    status = "okay";
-};
-
-&pwm8 {
-    pinctrl-names = "default";
-    pinctrl-0 = <&pinctrl_pwm8>;
-    clocks = <&clks IMX6UL_CLK_PWM8>,
-         <&clks IMX6UL_CLK_PWM8>;
+    pinctrl-0 = <&pinctrl_pwm3>;
+    clocks = <&clks IMX6UL_CLK_PWM3>,
+         <&clks IMX6UL_CLK_PWM3>;
     status = "okay";
 };
 
@@ -211,8 +211,14 @@
             fsl,pins = <
                 /* eMMC/SD# */
                 MX6UL_PAD_SNVS_TAMPER1__GPIO5_IO01		0x10b0
-                /* gpio_LEDs */
+                /* Radar Supply */
                 MX6UL_PAD_GPIO1_IO05__GPIO1_IO05		0x10b0
+                /* LED-EN */
+                MX6UL_PAD_GPIO1_IO08__GPIO1_IO08		0x10b0
+                /* BOOT_SIG */
+                MX6UL_PAD_GPIO1_IO03__GPIO1_IO03		0x10b0
+                /* GPIO9 */
+                MX6UL_PAD_GPIO1_IO09__GPIO1_IO09		0x10b0
                 /* gpio_charge_I */
                 MX6UL_PAD_LCD_DATA20__GPIO3_IO25		0x10b0
                 /* gpio_charge_Q */
@@ -284,22 +290,22 @@
               //  MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
            // >;
        // };
+
+        pinctrl_pwm5: pwm5grp {
+            fsl,pins = <
+                MX6UL_PAD_LCD_DATA18__PWM5_OUT		0x110b0
+            >;
+        };
         
         pinctrl_pwm6: pwm6grp {
             fsl,pins = <
-                MX6UL_PAD_JTAG_TDI__PWM6_OUT		0x110b0
+                MX6UL_PAD_LCD_DATA19__PWM6_OUT		0x110b0
             >;
         };
 
-        pinctrl_pwm7: pwm7grp {
+        pinctrl_pwm3: pwm3grp {
             fsl,pins = <
-                MX6UL_PAD_JTAG_TCK__PWM7_OUT   		0x110b0
-            >;
-        };
-
-        pinctrl_pwm8: pwm8grp {
-            fsl,pins = <
-                MX6UL_PAD_JTAG_TRST_B__PWM8_OUT		0x110b0
+                MX6UL_PAD_GPIO1_IO04__PWM3_OUT		0x110b0
             >;
         };
         
