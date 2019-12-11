@@ -110,29 +110,29 @@
 //	status = "okay";
 //};
 
-&uart2 {
-    pinctrl-names = "default";
-    pinctrl-0 = <&pinctrl_uart2>;
-
-    fsl,uart-has-rtscts;
-
-    status = "okay";
-};
-
-//&ecspi3 {
-//    fsl,spi-num-chipselects = <1>;
+//&uart2 {
 //    pinctrl-names = "default";
- //   status = "okay";
+//    pinctrl-0 = <&pinctrl_uart2>;
+//
+//    fsl,uart-has-rtscts;
+//
+//    status = "okay";
+//};
+
+&ecspi3 {
+    fsl,spi-num-chipselects = <1>;
+    pinctrl-names = "default";
+    status = "okay";
 
     /*
      * Configure the GPIO that you selected as 'slave select'.
      */
-   // cs-gpios = <&gpio5 05 GPIO_ACTIVE_LOW>;
+    cs-gpios = <&gpio5 05 GPIO_ACTIVE_LOW>;
 
     /*
      * ECSPI3 (as master)
      */
-    //pinctrl-0 = <&pinctrl_ecspi3>;
+    pinctrl-0 = <&pinctrl_ecspi3>;
 
     /*
      * Reference block.
@@ -140,13 +140,13 @@
      * Add your slave devices here. Next is an example of spidev.
      * Expect a harmless kernel warning if you enable spidev as slave.
      */
-   // spidev@0 {
-     //   reg = <0>;
-       // compatible = "spidev";
-       // spi-max-frequency = <20000000>;
-   // };
+    spidev@0 {
+        reg = <0>;
+        compatible = "spidev";
+        spi-max-frequency = <1000000>;
+    };
 
-//};
+};
 
 &uart3 {
     pinctrl-names = "default";
@@ -228,7 +228,7 @@
                 /* gpio_ADC_RST */
                 MX6UL_PAD_LCD_DATA23__GPIO3_IO28		0x10b0
                 /* gpio_XBee_RST */
-                MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
+            //    MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
                 /* gpio_XBee_DTR */
                 MX6UL_PAD_SNVS_TAMPER6__GPIO5_IO06		0x10b0
                 /* gpio_SPH_SELECT */
@@ -272,24 +272,24 @@
         //};
         
 
-       pinctrl_uart2: uart2grp {
+      // pinctrl_uart2: uart2grp {
+      //      fsl,pins = <
+      //          MX6UL_PAD_UART2_RX_DATA__UART2_DCE_RX		0x1b030
+      //          MX6UL_PAD_UART2_TX_DATA__UART2_DCE_TX		0x1b030
+      //          MX6UL_PAD_UART2_RTS_B__UART2_DCE_RTS		0x1b0b1
+      //          MX6UL_PAD_UART2_CTS_B__UART2_DCE_CTS		0x1b0b1
+      //      >;
+      //  };
+        
+        pinctrl_ecspi3: ecspi3grp1 {
             fsl,pins = <
-                MX6UL_PAD_UART2_RX_DATA__UART2_DCE_RX		0x1b030
-                MX6UL_PAD_UART2_TX_DATA__UART2_DCE_TX		0x1b030
-                MX6UL_PAD_UART2_RTS_B__UART2_DCE_RTS		0x1b0b1
-                MX6UL_PAD_UART2_CTS_B__UART2_DCE_CTS		0x1b0b1
+                MX6UL_PAD_UART2_CTS_B__ECSPI3_MOSI		0x10b0
+                MX6UL_PAD_UART2_RTS_B__ECSPI3_MISO		0x10b0
+                MX6UL_PAD_UART2_RX_DATA__ECSPI3_SCLK		0x10b0
+                /*Chip select */
+                MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
             >;
         };
-        
-        //pinctrl_ecspi3: ecspi3grp1 {
-          //  fsl,pins = <
-            //    MX6UL_PAD_UART2_CTS_B__ECSPI3_MOSI		0x10b0
-              //  MX6UL_PAD_UART2_RTS_B__ECSPI3_MISO		0x10b0
-              //  MX6UL_PAD_UART2_RX_DATA__ECSPI3_SCLK		0x10b0
-              //  /*Chip select */
-              //  MX6UL_PAD_SNVS_TAMPER5__GPIO5_IO05		0x10b0
-           // >;
-       // };
 
         pinctrl_pwm5: pwm5grp {
             fsl,pins = <
