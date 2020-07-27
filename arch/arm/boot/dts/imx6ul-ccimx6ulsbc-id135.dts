@@ -219,6 +219,32 @@
     status = "okay";
 };
 
+&usbotg2 {
+
+    dr_mode = "host";
+
+    /* Set the proper voltage regulator. */
+
+    //vbus-supply = <&reg_usb_otg1_vbus>;
+
+    /*
+
+     * Configure the power line if needed.
+
+     */
+
+    //digi,power-line-active-high;
+    /*
+
+     * Configure the overcurrent line if needed.
+
+     */
+
+    //disable-over-current;
+    status = "okay";
+
+};
+
 &iomuxc {
     pinctrl-0 = <&pinctrl_hog>;
 
