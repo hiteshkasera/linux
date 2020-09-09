@@ -219,7 +219,7 @@
     status = "okay";
 };
 
-&usbotg1 {
+&usbotg2 {
 
     dr_mode = "host";
 
@@ -273,7 +273,7 @@
                 /* gpio_charge_I */
                 MX6UL_PAD_LCD_DATA20__GPIO3_IO25		0x10b0
                 /* gpio_charge_Q */
-                MX6UL_PAD_LCD_DATA21__GPIO3_IO26		0x10b0
+                MX6UL_PAD_LCD_DATA17__GPIO3_IO22		0x10b0
                 /* gpio_ADC_RDY */
                 MX6UL_PAD_LCD_DATA22__GPIO3_IO27		0x10b0
                 /* gpio_ADC_RST */
@@ -290,6 +290,18 @@
                 MX6UL_PAD_LCD_DATA10__GPIO3_IO15		0x10b0
                 /* gpio_INT_TSL (input) */
                 MX6UL_PAD_LCD_ENABLE__GPIO3_IO01		0xb0
+                /* Cellular modem power supply enable */
+                MX6UL_PAD_SNVS_TAMPER7__GPIO5_IO07      0x10b0
+                /* Cellular modem power supply mode */
+                MX6UL_PAD_SNVS_TAMPER8__GPIO5_IO08      0x10b0
+                /* Cellular ON/OFF */
+                MX6UL_PAD_GPIO1_IO02__GPIO1_IO02        0x10b0
+                /* USB power enable */
+                MX6UL_PAD_GPIO1_IO06__GPIO1_IO06        0x10b0
+                /* CELLULAR_RING */
+                MX6UL_PAD_GPIO1_IO07__GPIO1_IO07        0x10b0
+                /* Cellular nSLEEP */
+                MX6UL_PAD_ENET1_RX_DATA1__GPIO2_IO01    0x10b0
             >;
         };
            /* Battery */
