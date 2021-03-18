@@ -17,16 +17,17 @@
 		/* U-Boot will fill in the MAC address here */
 	};
 
-	bluetooth {
+	bluetooth: bluetooth {
 		/* U-Boot will fill in the MAC address here */
 	};
 };
 
 /* UART1 (Bluetooth) */
 &uart1 {
-	pinctrl-names = "default", "dte_noflow";
-	pinctrl-0 = <&pinctrl_uart1>;
-	pinctrl-1 = <&pinctrl_uart1_dte_noflow>;
+	pinctrl-names = "default", "dte_noflow", "sleep";
+	pinctrl-0 = <&pinctrl_uart1 &pinctrl_uart1_gpio>;
+	pinctrl-1 = <&pinctrl_uart1_dte_noflow &pinctrl_uart1_gpio>;
+	pinctrl-2 = <&pinctrl_uart1 &pinctrl_uart1_gpio_sleep>;
 	uart-has-rtscts;
 	/*
 	 * NOTE: The default configuration for CC6UL SOM hardware vesion 4
