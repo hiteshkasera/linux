@@ -171,6 +171,16 @@
 
 //};
 
+/* Disable Bluetooth */
+&bluetooth {
+	status = "disabled";
+};
+
+&uart1 {
+	/* Drive BT_EN low to disable Bluetooth */
+	pinctrl-assert-gpios = <&gpio5 9 GPIO_ACTIVE_LOW>;
+};
+
 &uart3 {
     pinctrl-names = "default";
     pinctrl-0 = <&pinctrl_uart3>;
