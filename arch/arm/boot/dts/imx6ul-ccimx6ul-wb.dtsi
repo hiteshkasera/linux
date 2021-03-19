@@ -114,7 +114,6 @@
 			fsl,pins = <
 				/* Configure as open-drain */
 				MX6UL_PAD_SNVS_TAMPER0__GPIO5_IO00	0x08a0
-				MX6UL_PAD_SNVS_TAMPER9__GPIO5_IO09	0x08a0
 			>;
 		};
 
@@ -132,7 +131,6 @@
 		pinctrl_wifibt_ctrl_sleep: wifibt_ctrl_grp_sleep {
 			fsl,pins = <
 				MX6UL_PAD_SNVS_TAMPER0__GPIO5_IO00	0x3000
-				MX6UL_PAD_SNVS_TAMPER9__GPIO5_IO09	0x3000
 			>;
 		};
 	};
